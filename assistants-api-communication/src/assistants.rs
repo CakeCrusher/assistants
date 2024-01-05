@@ -18,6 +18,7 @@ pub async fn create_assistant_handler(
     State(app_state): State<AppState>,
     Json(assistant): Json<Value>, // TODO https://github.com/64bit/async-openai/issues/166
 ) -> Result<JsonResponse<AssistantObject>, (StatusCode, String)> {
+    println!("ASSISTANT: {:?}", assistant);
     let tools = assistant["tools"].as_array().unwrap_or(&vec![]).to_vec();
     let assistant = create_assistant(
         &app_state.pool,

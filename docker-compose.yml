@@ -41,7 +41,8 @@ services:
   
   assistants:
     container_name: assistants
-    image: ghcr.io/stellar-amenities/assistants/assistants:latest
+    # image: ghcr.io/stellar-amenities/assistants/assistants:latest
+    build: .
     ports:
       - 3000:3000
     depends_on:
@@ -56,6 +57,9 @@ services:
       - REDIS_URL=redis://redis
     env_file:
       - ../.env
+    volumes:
+      - ./assistants-api-communication:/app/assistants-api-communication
+      - ./assistants-extra:/app/assistants-extra
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
